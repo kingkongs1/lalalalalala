@@ -1,0 +1,4 @@
+django == 3.0.10
+django-pyodbc
+django-pyodbc-azure
+django == 3.0.10

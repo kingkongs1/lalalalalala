@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<title>부산 문화재 탐방</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">		
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div id=logo>
+		<img alt="로고" src="{% static '/logo2.png' %}" width="354" height="283"/>
+	</div>
+	<div id="h1"><h1>부산 문화재 탐방</h1></div>
+	
+	<div id="map">
+		<div class="map_img">
+			{% for azureex in azureexs %}
+			{% if azureex.문화재명 == request.GET.문화재명 %}
+				<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=4e272ca313281ddde677ba9b51732b4c"></script>
+					<script>
+					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+						mapOption = {
+							center: new kakao.maps.LatLng(35.166952904756, 128.9942414861), // 지도의 중심좌표
+							level: 6, // 지도의 확대 레벨
+							mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+						}; 
+					var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성한다 
+				</script>
+			{% endif %}
+			{% endfor %}
+	    </div>
+	</div>
+
+	<div class="container">
+	    <table class="table table-striped table-hover text-center">
+	        <thead>
+	        <tr>
+	            <td><B>번호</B></td>
+	            <td><B>문화재명</B></td>
+	            <td><B>지정번호</B></td>
+	            <td><B>소재지</B></td>
+	        </tr>
+	        </thead>
+	        <tbody>
+				{% for azureex in azureexs %}
+				<tr>
+					<td>{{azureex.연번}}</td>
+					<td><a href="{% url 'index' %}?문화재명={{azureex.문화재명}} " >{{azureex.문화재명}}</a></td>
+					<td>{{azureex.지정번호}}</td>
+					<td>{{azureex.소재지}}</td>
+				</tr>
+				{% endfor %}
+	        </tr>
+	        </tbody>
+	    </table>
+	</div>
+
+</body>
+</html>
+		
